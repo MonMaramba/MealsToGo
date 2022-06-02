@@ -55,14 +55,14 @@ const Address = styled(Text)`
 export const RestaurantInfoCard = ({ restaurant = {} }) => {
   const {
     name = 'Some Restaurant',
-    icon,
+    icon = 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
     photos = [
       'https://img.freepik.com/free-photo/chicken-wings-barbecue-sweetly-sour-sauce-picnic-summer-menu-tasty-food-top-view-flat-lay_2829-6471.jpg?t=st=1653874717~exp=1653875317~hmac=cbb323d10a52f07ac1a2e2016a7456e2682d97951d6b81db667f3d4ac81f9cf3&w=996',
     ],
     address = '100 some random address',
     isOpenNow = true,
     rating = 4,
-    isClosedTemporarily,
+    isClosedTemporarily = true,
   } = restaurant;
   const ratingArray = Array.from(new Array(Math.floor(rating)));
   return (
@@ -77,7 +77,15 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
             ))}
           </Rating>
           <SectionEnd>
+            {isClosedTemporarily && (
+              <Text variant='label' style={{ color: 'red' }}>
+                CLOSED TEMPORARILY
+              </Text>
+            )}
+            <View style={{ paddingLeft: 16 }} />
             {isOpenNow ? <SvgXml xml={open} width={20} height={20} /> : null}
+            <View style={{ paddingLeft: 16 }} />
+            <Image style={{ width: 15, height: 15 }} source={{ uri: icon }} />
           </SectionEnd>
         </Section>
         <Address>{address}</Address>
