@@ -5,6 +5,7 @@ import { SvgXml } from 'react-native-svg';
 import { Card } from 'react-native-paper';
 import star from '../../../../assets/star';
 import open from '../../../../assets/open';
+import { Spacer } from '../../../components/spacer/spacer.component';
 
 const RestaurantCard = styled(Card)`
   background-color: ${(props) => props.theme.colors.ui.primary};
@@ -31,7 +32,7 @@ const SectionEnd = styled(View)`
 `;
 
 const Info = styled(View)`
-    padding: {(props) => -moz-context-properties.theme.space[3]} ;
+  padding: ${(props) => props.theme.space[3]};
 `;
 
 const RestaurantCardCover = styled(Card.Cover)`
@@ -46,14 +47,15 @@ const Title = styled(Text)`
   background-color: ${(props) => props.theme.colors.bg.primary};
 `;
 
-const Address = styled(Text)` 
-    font-family: {(props) => props.theme.fonts.body} ;
-    font-size: ${(props) => props.theme.fontSizes.caption};
-    background-color: ${(props) => props.theme.colors.bg.primary};
+const Address = styled(Text)`
+  font-family: ${(props) => props.theme.fonts.body};
+  font-size: ${(props) => props.theme.fontSizes.caption};
+  background-color: ${(props) => props.theme.colors.bg.primary};
 `;
 
 export const RestaurantInfoCard = ({ restaurant = {} }) => {
   const {
+    key = 1,
     name = 'Some Restaurant',
     icon = 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
     photos = [
@@ -67,7 +69,7 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
   const ratingArray = Array.from(new Array(Math.floor(rating)));
   return (
     <RestaurantCard>
-      <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
+      <RestaurantCardCover key={key} source={{ uri: photos[0] }} />
       <Info>
         <Title>{name}</Title>
         <Section>
@@ -82,10 +84,12 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
                 CLOSED TEMPORARILY
               </Text>
             )}
-            <View style={{ paddingLeft: 16 }} />
-            {isOpenNow ? <SvgXml xml={open} width={20} height={20} /> : null}
-            <View style={{ paddingLeft: 16 }} />
-            <Image style={{ width: 15, height: 15 }} source={{ uri: icon }} />
+            <Spacer position='left' size='large'>
+              {isOpenNow ? <SvgXml xml={open} width={20} height={20} /> : null}
+            </Spacer>
+            <Spacer position='left' size='large'>
+              <Image style={{ width: 15, height: 15 }} source={{ uri: icon }} />
+            </Spacer>
           </SectionEnd>
         </Section>
         <Address>{address}</Address>
